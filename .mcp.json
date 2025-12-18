@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/pranav/Documents/rag_review",
+        "/Users/pranav/Documents/apps",
+        "/Users/pranav/Documents/memory"
+      ]
+    }
+  }
+}
