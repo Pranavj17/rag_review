@@ -1,15 +1,17 @@
 import Config
 
+# Default configuration (can be overridden by runtime.exs or parent app config)
+
 # ChromaDB configuration
 config :chroma,
-  host: System.get_env("CHROMA_HOST", "http://localhost:8000"),
+  host: "http://localhost:8000",
   api_base: "api",
   api_version: "v2"
 
 # RAG Review configuration
 config :rag_review,
-  ollama_host: System.get_env("OLLAMA_HOST", "http://localhost:11434"),
-  default_model: System.get_env("RAG_REVIEW_MODEL", "qwen2.5:14b")
+  ollama_host: "http://localhost:11434",
+  default_model: "qwen2.5-coder:7b"
 
 # Import environment specific config
 import_config "#{config_env()}.exs"

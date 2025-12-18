@@ -188,11 +188,33 @@ This should use environment variables instead.
 
 ## Configuration
 
-| Environment Variable | Default | Description |
-|---------------------|---------|-------------|
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
 | `CHROMA_HOST` | `http://localhost:8000` | ChromaDB URL |
 | `OLLAMA_HOST` | `http://localhost:11434` | Ollama URL |
 | `RAG_REVIEW_MODEL` | `qwen2.5-coder:7b` | LLM for reviews |
+
+### Remote Setup (Mac Mini Example)
+
+When ChromaDB and Ollama run on a remote machine (e.g., Mac Mini):
+
+```bash
+# Point to Mac Mini
+export CHROMA_HOST=http://10.10.30.4:8000
+export OLLAMA_HOST=http://10.10.30.4:11434
+```
+
+Or in your app's `config/runtime.exs`:
+
+```elixir
+config :chroma,
+  host: System.get_env("CHROMA_HOST", "http://10.10.30.4:8000")
+
+config :rag_review,
+  ollama_host: System.get_env("OLLAMA_HOST", "http://10.10.30.4:11434")
+```
 
 ## Project Structure
 
