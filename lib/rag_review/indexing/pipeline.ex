@@ -79,7 +79,12 @@ defmodule RagReview.Indexing.Pipeline do
       files
       |> Enum.with_index(1)
       |> Enum.reduce({[], %{processed: 0, errors: 0}}, fn {file, idx}, {chunks_acc, stats} ->
-        progress_cb.(%{phase: :parsing, current: idx, total: total_files, file: file.relative_path})
+        progress_cb.(%{
+          phase: :parsing,
+          current: idx,
+          total: total_files,
+          file: file.relative_path
+        })
 
         case Chunker.chunk_file(file.path) do
           {:ok, file_chunks} ->

@@ -6,7 +6,8 @@ defmodule RagReview.Generation.OllamaClient do
   require Logger
 
   @default_model "qwen2.5-coder:7b"
-  @timeout 300_000  # 5 minutes for complex reviews
+  # 5 minutes for complex reviews
+  @timeout 300_000
 
   @doc """
   Send a chat completion request to Ollama.

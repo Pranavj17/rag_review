@@ -241,7 +241,12 @@ defmodule RagReview.Store.ChromaStore do
     }
   end
 
-  defp parse_query_result(%{"ids" => [ids], "documents" => [docs], "metadatas" => [metas], "distances" => [distances]}) do
+  defp parse_query_result(%{
+         "ids" => [ids],
+         "documents" => [docs],
+         "metadatas" => [metas],
+         "distances" => [distances]
+       }) do
     [ids, docs, metas, distances]
     |> Enum.zip()
     |> Enum.map(fn {id, doc, meta, distance} ->

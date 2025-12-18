@@ -448,7 +448,16 @@ defmodule RagReview.CLI do
     Application.put_env(:chroma, :api_version, "v2")
 
     # Set RAG Review config
-    Application.put_env(:rag_review, :ollama_host, System.get_env("OLLAMA_HOST", "http://localhost:11434"))
-    Application.put_env(:rag_review, :default_model, System.get_env("RAG_REVIEW_MODEL", "qwen2.5-coder:7b"))
+    Application.put_env(
+      :rag_review,
+      :ollama_host,
+      System.get_env("OLLAMA_HOST", "http://localhost:11434")
+    )
+
+    Application.put_env(
+      :rag_review,
+      :default_model,
+      System.get_env("RAG_REVIEW_MODEL", "qwen2.5-coder:7b")
+    )
   end
 end

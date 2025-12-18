@@ -50,11 +50,49 @@ ollama pull qwen2.5-coder:7b  # Code review LLM
 
 ## Installation
 
+### Option 1: As a Dependency (Recommended)
+
+Add to your `mix.exs`:
+
+```elixir
+defp deps do
+  [
+    {:rag_review, github: "Pranavj17/rag_review"}
+  ]
+end
+```
+
+Then run setup:
+
+```bash
+mix deps.get
+mix compile
+```
+
+**Usage as library:**
+
+```elixir
+# Index a repository
+RagReview.Indexing.Pipeline.run("/path/to/repo", name: "my-project")
+
+# Retrieve context for a diff
+{:ok, result} = RagReview.Retrieval.Retriever.retrieve_for_diff(diff, "my-project")
+IO.puts(result.context)
+
+# Full review
+{:ok, %{review: review}} = RagReview.Generation.Reviewer.review(diff, "my-project")
+```
+
+### Option 2: Standalone CLI
+
 ```bash
 # Clone and build
+git clone https://github.com/Pranavj17/rag_review.git
 cd rag_review
 mix deps.get
 mix escript.build
+
+# Binary is at ./rag_review
 ```
 
 ## Usage
@@ -87,6 +125,21 @@ git diff | ./rag_review review --quick
 # Review from file
 ./rag_review review --repo my-project --file changes.diff
 ```
+
+### Get Context Only (Shell Script Integration)
+
+```bash
+# Get relevant context without LLM call
+git diff | ./rag_review context --repo my-project
+
+# JSON output for parsing
+git diff | ./rag_review context --repo my-project --format json
+
+# Limit number of chunks
+git diff | ./rag_review context --repo my-project --limit 15
+```
+
+This is useful for integrating with existing review scripts (e.g., `ollama_review.sh`).
 
 ### Other Commands
 

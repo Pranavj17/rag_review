@@ -75,7 +75,8 @@ defmodule RagReview.Retrieval.ContextBuilder do
     {selected, _} =
       Enum.reduce_while(chunks, {[], 0}, fn chunk, {acc, total} ->
         doc = chunk.document || ""
-        chunk_size = String.length(doc) + 100 # Account for formatting
+        # Account for formatting
+        chunk_size = String.length(doc) + 100
 
         if total + chunk_size > max_chars do
           {:halt, {acc, total}}

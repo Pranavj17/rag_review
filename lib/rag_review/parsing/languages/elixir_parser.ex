@@ -167,10 +167,12 @@ defmodule RagReview.Parsing.Languages.ElixirParser do
 
   # Format error location - handles both integer and keyword list formats
   defp format_location(location) when is_integer(location), do: "line #{location}"
+
   defp format_location(location) when is_list(location) do
     line = Keyword.get(location, :line, "?")
     column = Keyword.get(location, :column)
     if column, do: "line #{line}, column #{column}", else: "line #{line}"
   end
+
   defp format_location(location), do: "location #{inspect(location)}"
 end

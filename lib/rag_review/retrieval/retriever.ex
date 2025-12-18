@@ -20,7 +20,10 @@ defmodule RagReview.Retrieval.Retriever do
 
     # Parse the diff
     analysis = DiffParser.parse(diff_string)
-    Logger.debug("Diff analysis: #{length(analysis.files)} files, #{length(analysis.hunks)} hunks")
+
+    Logger.debug(
+      "Diff analysis: #{length(analysis.files)} files, #{length(analysis.hunks)} hunks"
+    )
 
     # Generate queries from diff
     queries = DiffParser.generate_queries(analysis)
