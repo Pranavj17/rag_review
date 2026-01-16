@@ -250,7 +250,24 @@ defmodule RagReview.CLI do
 
     IO.puts(:stderr, "Retrieving context from '#{repo}'...")
 
-    case Retriever.retrieve_for_diff(diff, repo, n_results: limit) do
+    # Fetch collection from ChromaDB first
+    case ChromaStore.get_collection(repo) do
+      {:ok, collection} ->
+        retrieve_and_output_context(diff, collection, limit, format)
+
+      {:error, :not_found} ->
+        IO.puts(:stderr, "Error: Repository '#{repo}' not found")
+        IO.puts(:stderr, "Run: rag_review list  (to see indexed repositories)")
+        System.halt(1)
+
+      {:error, reason} ->
+        IO.puts(:stderr, "Error: Failed to get collection: #{inspect(reason)}")
+        System.halt(1)
+    end
+  end
+
+  defp retrieve_and_output_context(diff, collection, limit, format) do
+    case Retriever.retrieve_for_diff(diff, collection, n_results: limit) do
       {:ok, result} ->
         output_context(result, format)
 
